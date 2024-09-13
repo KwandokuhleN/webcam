@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Webcam</title>
+    <link rel="stylesheet" href="style.css" />
+   
+    
+</head>
+
+<body>
+    <div class="webcam">
+        <div class="video-outer">
+            <video id="video"  autoplay></video>
+        </div>
+    </div>
+        <div class="webcam-start-stop">
+            <button  class="btn-start" onclick="start()">Start</button>
+            <button class="btn-stop" onclick="Stop()">Stop</button>
+        </div>
+    
+
+
+    <script>
+        var Stop = function () {
+            var stream = video.srcObject;
+            var tracks = stream.getTracks();
+
+            for (var i = 0; i < tracks.length; i++) {
+                var track = tracks[i];
+                track.stop();
+            }
+            video.srcObject = null;
+        }
+
+        var start = function () {
+            var video = document.getElementById("video"),
+                vendorURL = window.URL || window.webkitURL;
+
+            if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+                    }).catch(function (error) {
+                        console.log("Something went wrong");
+                    });
+            }
+        }
+        $(function () { start(); });
+    </script>
+</body>
+
+</html>
